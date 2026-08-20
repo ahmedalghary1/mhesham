@@ -1,0 +1,32 @@
+{% load static %}
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>{% block title %}Dashboard{% endblock %} | Mohamed Hesham</title>
+  <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard-responsive.css' %}">
+  <link rel="stylesheet" href="{% static 'css/visual-refresh.css' %}">
+</head>
+<body class="dashboard-body">
+  <aside class="dashboard-sidebar" data-dashboard-sidebar>
+    <a class="dashboard-brand" href="{% url 'dashboard:overview' %}"><span>MH</span><div>Mohamed Hesham<small>Portfolio studio</small></div></a>
+    <a class="view-site" href="{% url 'core:home' %}" target="_blank">View website ↗</a>
+    <nav>
+      <a href="{% url 'dashboard:overview' %}">Overview</a><p>Content</p>
+      <a href="{% url 'dashboard:model_list' 'home' %}">Home</a><a href="{% url 'dashboard:model_list' 'projects' %}">Projects</a><a href="{% url 'dashboard:model_list' 'categories' %}">Categories</a><a href="{% url 'dashboard:model_list' 'experience' %}">Experience</a><a href="{% url 'dashboard:model_list' 'volunteering' %}">Volunteering</a><a href="{% url 'dashboard:model_list' 'skills' %}">Skills</a><a href="{% url 'dashboard:model_list' 'certificates' %}">Certificates</a><a href="{% url 'dashboard:model_list' 'education' %}">Education</a><a href="{% url 'dashboard:model_list' 'media' %}">Media</a>
+      <p>Communication</p><a href="{% url 'dashboard:model_list' 'messages' %}">Messages</a><a href="{% url 'dashboard:model_list' 'social' %}">Social links</a><a href="{% url 'dashboard:model_list' 'settings' %}">Settings & SEO</a>
+    </nav>
+    <form method="post" action="{% url 'dashboard:logout' %}">{% csrf_token %}<button type="submit">Sign out</button></form>
+  </aside>
+  <div class="dashboard-main">
+    <header class="dashboard-topbar"><button type="button" data-sidebar-toggle aria-label="Toggle navigation" aria-expanded="false">☰</button><div><strong>{{ request.user.get_full_name|default:request.user.username }}</strong><span>Administrator</span></div></header>
+    {% if messages %}<div class="dashboard-toasts">{% for message in messages %}<div>{{ message }}</div>{% endfor %}</div>{% endif %}
+    <main>{% block content %}{% endblock %}</main>
+  </div>
+  <div class="confirm-modal" data-confirm-modal hidden><div><h2>Confirm deletion</h2><p>This action cannot be undone.</p><div><button type="button" data-confirm-cancel>Cancel</button><button type="button" class="danger" data-confirm-accept>Delete</button></div></div></div>
+  <script defer src="{% static 'js/dashboard.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+{% load static i18n portfolio_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}" data-motion="{{ site_settings.animation_intensity }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#12133f">
+  <title>{% block title %}{% if is_ar %}{{ site_settings.default_title_ar }}{% else %}{{ site_settings.default_title_en }}{% endif %}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{% if is_ar %}{{ site_settings.default_description_ar }}{% else %}{{ site_settings.default_description_en }}{% endif %}{% endblock %}">
+  <meta name="keywords" content="{{ site_settings.keywords }}">
+  <link rel="canonical" href="{{ request.build_absolute_uri }}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}{% if is_ar %}{{ site_settings.default_title_ar }}{% else %}{{ site_settings.default_title_en }}{% endif %}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{% if is_ar %}{{ site_settings.default_description_ar }}{% else %}{{ site_settings.default_description_en }}{% endif %}{% endblock %}">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  {% block og_image %}{% if site_settings.open_graph_image %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ site_settings.open_graph_image.url }}">{% endif %}{% endblock %}
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components.css' %}">
+  <link rel="stylesheet" href="{% static 'css/community.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animations.css' %}">
+  <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+  <link rel="stylesheet" href="{% static 'css/responsive-pro.css' %}">
+  <link rel="stylesheet" href="{% static 'css/visual-refresh.css' %}">
+  {% block extra_css %}{% endblock %}
+  {% if site_settings.favicon %}<link rel="icon" href="{{ site_settings.favicon.url }}">{% endif %}
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Mohamed Hesham Abdul-Rahman","jobTitle":"Graphic Designer","email":"mailto:{{ site_settings.email }}","address":{"@type":"PostalAddress","addressLocality":"Mansoura","addressCountry":"EG"}}</script>
+</head>
+<body class="{% if site_settings.show_grid %}has-grid{% endif %} {% if site_settings.show_cursor %}has-cursor{% endif %}">
+  <a class="skip-link" href="#main-content">{% if is_ar %}انتقل إلى المحتوى{% else %}Skip to content{% endif %}</a>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  {% include 'includes/navbar.html' %}
+  {% if messages %}<div class="toast-stack" aria-live="polite">{% for message in messages %}<div class="toast">{{ message }}</div>{% endfor %}</div>{% endif %}
+  <main id="main-content">{% block content %}{% endblock %}</main>
+  {% include 'includes/footer.html' %}
+  <div class="page-transition" aria-hidden="true"></div>
+  <div class="custom-cursor" aria-hidden="true"><span>{% if is_ar %}عرض{% else %}VIEW{% endif %}</span></div>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.3.8/dist/lenis.min.js"></script>
+  <script defer src="{% static 'js/main.js' %}"></script>
+  <script defer src="{% static 'js/animations.js' %}"></script>
+  <script defer src="{% static 'js/cursor.js' %}"></script>
+  <script defer src="{% static 'js/portfolio.js' %}"></script>
+  <script defer src="{% static 'js/language.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

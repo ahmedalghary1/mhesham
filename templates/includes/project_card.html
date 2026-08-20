@@ -1,0 +1,10 @@
+{% load portfolio_tags %}
+<article class="project-card project-card--{{ forloop.counter|default:'1' }}" data-project-card data-category="{{ project.category.slug|default:'' }}">
+  <a href="{{ project.get_absolute_url }}" class="project-card__link" data-page-link>
+    <div class="project-card__media"><img src="{{ project.cover_image.url }}" alt="{{ project|localize:'title' }}" loading="lazy" width="1200" height="900"></div>
+    <div class="project-card__overlay">
+      <div><span>{{ project.category|localize:'name' }}{% if project.year %} · {{ project.year }}{% endif %}</span><h3>{{ project|localize:'title' }}</h3></div>
+      <span class="round-arrow" aria-hidden="true">↗</span>
+    </div>
+  </a>
+</article>

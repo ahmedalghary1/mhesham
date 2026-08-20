@@ -1,0 +1,8 @@
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div><a class="footer-mark" href="{% url 'core:home' %}">Mohamed Hesham</a><p>{% if is_ar %}مصمم جرافيك — المنصورة، مصر{% else %}Graphic Designer — Mansoura, Egypt{% endif %}</p></div>
+    <nav aria-label="Footer"><a href="{% url 'projects:list' %}">{% if is_ar %}الأعمال{% else %}Work{% endif %}</a><a href="{% url 'core:about' %}">{% if is_ar %}عني{% else %}About{% endif %}</a><a href="{% url 'contact:contact' %}">{% if is_ar %}تواصل{% else %}Contact{% endif %}</a></nav>
+    <div class="footer-socials">{% for link in social_links %}<a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">{{ link.platform }}</a>{% endfor %}</div>
+  </div>
+  <div class="container copyright">© <span data-year></span> Mohamed Hesham. {% if is_ar %}جميع الحقوق محفوظة.{% else %}All rights reserved.{% endif %}</div>
+</footer>

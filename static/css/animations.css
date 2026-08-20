@@ -1,0 +1,8 @@
+@keyframes orbit-spin{to{transform:rotate(360deg)}}
+@keyframes orbit-counter{to{transform:rotate(-360deg)}}
+@keyframes pulse-dot{50%{box-shadow:0 0 0 8px rgba(119,230,187,0)}}
+.availability i{animation:pulse-dot 2.2s infinite}
+.reveal-heading{will-change:transform,opacity}
+.project-card{will-change:clip-path;clip-path:inset(0 0 0 0 round 32px)}
+html[data-motion=low] .particle,html[data-motion=low] .orbit{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.orbit,.orbit-item,.availability i{animation:none}.custom-cursor{display:none}}

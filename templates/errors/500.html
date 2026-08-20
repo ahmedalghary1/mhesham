@@ -1,0 +1,1 @@
+{% extends 'base.html' %}{% block content %}<section class="error-page section"><div class="container"><span>500</span><h1>{% if is_ar %}حدث خطأ غير متوقع.{% else %}Something went wrong.{% endif %}</h1><a class="button button--light" href="/">{% if is_ar %}العودة للرئيسية{% else %}Back home{% endif %}</a></div></section>{% endblock %}

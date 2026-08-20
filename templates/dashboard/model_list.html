@@ -1,0 +1,27 @@
+{% extends 'dashboard/base_dashboard.html' %}
+{% block title %}{{ model_title }}{% endblock %}
+{% block content %}
+<div class="dashboard-heading">
+  <div><p class="dashboard-eyebrow">CONTENT</p><h1>{{ model_title }}</h1><p>Search, edit, reorder, and keep this part of the site current.</p></div>
+  {% if model_key != 'messages' %}<a class="dashboard-primary" href="{% url 'dashboard:model_create' model_key %}">Add new +</a>{% endif %}
+</div>
+<section class="dashboard-panel table-panel">
+  <form class="dashboard-search" method="get"><input type="search" name="q" value="{{ query }}" placeholder="Search {{ model_title|lower }}…"><button type="submit">Search</button></form>
+  {% if rows %}
+  <div class="responsive-table"><table>
+    <thead><tr>{% for field in fields %}<th>{{ field.verbose_name|title }}</th>{% endfor %}<th>Actions</th></tr></thead>
+    <tbody data-sortable-list data-reorder-url="{% url 'dashboard:reorder' model_key %}">
+    {% for row in rows %}<tr data-id="{{ row.object.pk }}">
+      {% for value in row.values %}<td>{% if value == True %}<span class="status status--published">Yes</span>{% elif value == False %}<span class="status status--draft">No</span>{% else %}{{ value|truncatechars:54|default:'—' }}{% endif %}</td>{% endfor %}
+      <td class="row-actions">
+        <a href="{% url 'dashboard:model_edit' model_key row.object.pk %}">Edit</a>
+        {% if model_key == 'projects' %}<a href="{% url 'dashboard:project_gallery' row.object.pk %}">Gallery</a><a href="{% url 'dashboard:project_preview' row.object.pk %}" target="_blank">Preview</a>{% endif %}
+        {% if model_key == 'messages' %}<form method="post" action="{% url 'dashboard:message_status' row.object.pk 'read' %}">{% csrf_token %}<button type="submit">Read</button></form><form method="post" action="{% url 'dashboard:message_status' row.object.pk 'archived' %}">{% csrf_token %}<button type="submit">Archive</button></form>{% endif %}
+        <form method="post" action="{% url 'dashboard:model_delete' model_key row.object.pk %}" data-delete-form>{% csrf_token %}<button type="submit">Delete</button></form>
+      </td>
+    </tr>{% endfor %}
+    </tbody>
+  </table></div>
+  {% else %}<div class="dashboard-empty"><span>◇</span><h3>No {{ model_title|lower }} found</h3><p>Create the first item or adjust your search.</p>{% if model_key != 'messages' %}<a href="{% url 'dashboard:model_create' model_key %}">Create item</a>{% endif %}</div>{% endif %}
+</section>
+{% endblock %}

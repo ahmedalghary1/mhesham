@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load portfolio_tags static %}
+{% block content %}
+<section class="hero section" id="home">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <div class="availability"><i></i>{{ home|localize:'badge' }}</div>
+      <p class="eyebrow">{% if is_ar %}محمد هشام — مصمم جرافيك{% else %}Mohamed Hesham — Graphic Designer{% endif %}</p>
+      <h1 class="hero-title"><span>{{ home|localize:'name' }}</span><strong>{{ home|localize:'headline' }}</strong></h1>
+      <p class="hero-description">{{ home|localize:'description' }}</p>
+      <div class="hero-actions">
+        <a class="button button--light magnetic" href="#work"><span>{% if is_ar %}استعرض أعمالي{% else %}Explore My Work{% endif %}</span><b aria-hidden="true">↘</b></a>
+        <a class="button button--ghost magnetic" href="#contact"><span>{% if is_ar %}تواصل معي{% else %}Let's Work Together{% endif %}</span><b aria-hidden="true">↗</b></a>
+      </div>
+      <div class="hero-meta"><span>4+ {% if is_ar %}سنوات خبرة{% else %}years experience{% endif %}</span><span>{{ site_settings|localize:'location' }}</span></div>
+    </div>
+    <div class="hero-visual" data-parallax-root aria-label="{% if is_ar %}تكوين بصري لمهارات محمد هشام{% else %}Mohamed Hesham creative skills composition{% endif %}">
+      <div class="visual-glow" data-parallax="2"></div>
+      <div class="orbit orbit--one"><div class="orbit-item" title="Adobe Photoshop"><img src="{% static 'icons/software/photoshop.svg' %}" alt="Adobe Photoshop"></div><div class="orbit-item" title="Adobe Illustrator"><img src="{% static 'icons/software/illustrator.svg' %}" alt="Adobe Illustrator"></div></div>
+      <div class="orbit orbit--two"><div class="orbit-item" title="Figma"><img src="{% static 'icons/software/figma.svg' %}" alt="Figma"></div><div class="orbit-item" title="Canva"><img src="{% static 'icons/software/canva.svg' %}" alt="Canva"></div></div>
+      <div class="orbit orbit--three"><div class="orbit-item" title="Adobe InDesign"><img src="{% static 'icons/software/indesign.svg' %}" alt="Adobe InDesign"></div><div class="orbit-item" title="Adobe Premiere Pro"><img src="{% static 'icons/software/premiere-pro.svg' %}" alt="Adobe Premiere Pro"></div></div>
+      <div class="portrait-shell" data-parallax="1">
+        {% if site_settings.profile_photo %}<img src="{{ site_settings.profile_photo.url }}" alt="Mohamed Hesham" width="720" height="880" fetchpriority="high">{% else %}<div class="portrait-fallback"><span>MH</span><small>{% if is_ar %}أضف الصورة من لوحة التحكم{% else %}Portrait ready to upload{% endif %}</small></div>{% endif %}
+      </div>
+      <span class="particle particle--one"></span><span class="particle particle--two"></span><span class="particle particle--three"></span>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span>{% if is_ar %}مرّر لاكتشاف الأعمال{% else %}Scroll to discover{% endif %}</span><i></i></div>
+</section>
+
+<section class="work section" id="work">
+  <div class="container">
+    <div class="section-heading reveal-heading"><p class="eyebrow">01 — {% if is_ar %}الأعمال{% else %}Portfolio{% endif %}</p><h2>{% if is_ar %}مختارات من <em>أعمالي</em>{% else %}Selected <em>Work</em>{% endif %}</h2><a href="{% url 'projects:list' %}">{% if is_ar %}كل الأعمال{% else %}View all work{% endif %} <span>↗</span></a></div>
+    {% if projects %}<div class="editorial-grid">{% for project in projects %}{% include 'includes/project_card.html' %}{% endfor %}</div>
+    {% else %}<div class="empty-state work-empty"><span>WIP / 01</span><h3>{% if is_ar %}مساحة الأعمال جاهزة للحكاية القادمة.{% else %}The work wall is ready for its first story.{% endif %}</h3><p>{% if is_ar %}لا توجد مشاريع وهمية هنا. ستظهر الأعمال المنشورة من لوحة التحكم بهذا التخطيط التحريري.{% else %}No invented case studies. Published projects will appear here in this editorial layout.{% endif %}</p><a class="button button--ghost" href="https://drive.google.com/drive/folders/1EDXVY7Mnkp_k1WtBFM54d6wniQ1RMhKm?usp=drive_link" target="_blank" rel="noopener noreferrer">{% if is_ar %}استعرض جميع الأعمال{% else %}View Full Portfolio{% endif %} ↗</a></div>{% endif %}
+  </div>
+</section>
+
+<section class="about section" id="about">
+  <div class="container about-grid">
+    <div class="section-index">02</div>
+    <div><p class="eyebrow">{% if is_ar %}نبذة عني{% else %}About me{% endif %}</p><h2 class="reveal-heading">{% if is_ar %}أحوّل الاستراتيجية إلى <em>لغة بصرية.</em>{% else %}Turning strategy into a <em>visual language.</em>{% endif %}</h2></div>
+    <div class="about-copy"><p>{{ home|localize:'about' }}</p><a class="text-link" href="{% url 'core:about' %}">{% if is_ar %}اعرف المزيد عني{% else %}More about me{% endif %} ↗</a></div>
+    <div class="experience-stat"><strong>{{ home.years_experience }}+</strong><span>{% if is_ar %}سنوات من الخبرة عبر التصميم الرقمي والمطبوع{% else %}years across digital and print design{% endif %}</span></div>
+  </div>
+</section>
+
+<section class="skills section" id="skills">
+  <div class="container"><div class="section-heading reveal-heading"><p class="eyebrow">03 — {% if is_ar %}المهارات{% else %}Capabilities{% endif %}</p><h2>{% if is_ar %}أدوات تساعد الفكرة على <em>الظهور.</em>{% else %}Tools that bring the <em>idea forward.</em>{% endif %}</h2></div>
+    <div class="skill-groups">
+      <div><h3>{% if is_ar %}برامج التصميم{% else %}Creative software{% endif %}</h3><div class="skill-cloud">{% for skill in skills %}{% if skill.kind == 'software' %}<span>{% if skill.short_code %}<b>{{ skill.short_code }}</b>{% endif %}{{ skill|localize:'name' }}</span>{% endif %}{% empty %}<span><b>Ps</b>Photoshop</span><span><b>Ai</b>Illustrator</span><span><b>Fg</b>Figma</span><span><b>Cv</b>Canva</span>{% endfor %}</div></div>
+      <div><h3>{% if is_ar %}مهارات احترافية{% else %}Professional skills{% endif %}</h3><div class="skill-cloud skill-cloud--plain">{% for skill in skills %}{% if skill.kind == 'professional' %}<span>{{ skill|localize:'name' }}</span>{% endif %}{% empty %}<span>Branding</span><span>Visual Storytelling</span><span>Project Management</span><span>Leadership</span>{% endfor %}</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="experience section" id="experience">
+  <div class="container"><div class="section-heading reveal-heading"><p class="eyebrow">04 — {% if is_ar %}الخبرات{% else %}Experience{% endif %}</p><h2>{% if is_ar %}خبرة تتطور مع كل <em>تحدٍ جديد.</em>{% else %}Growing through every <em>new challenge.</em>{% endif %}</h2></div>
+    <div class="timeline">{% for item in experiences %}<article class="timeline-item"><div class="timeline-date"><span>{{ item.start_date|date:'M Y' }}</span><i></i><span>{% if item.is_current %}{% if is_ar %}حتى الآن{% else %}Present{% endif %}{% else %}{{ item.end_date|date:'M Y' }}{% endif %}</span></div><div><h3>{{ item.company }}</h3><p>{{ item|localize:'position' }}{% if item|localize:'location' %} · {{ item|localize:'location' }}{% endif %}</p><small>{{ item.employment_type }}</small></div></article>{% empty %}<div class="empty-state"><p>{% if is_ar %}يمكن إدارة الخبرات من لوحة التحكم.{% else %}Experience entries can be managed from the dashboard.{% endif %}</p></div>{% endfor %}</div>
+  </div>
+</section>
+
+{% if home.show_volunteering or home.show_education %}
+<section class="community section">
+  <div class="container community-grid">
+    {% if home.show_volunteering %}<div><p class="eyebrow">{% if is_ar %}المجتمع{% else %}Community{% endif %}</p><h2>{% if is_ar %}قيادة ومشاركة <em>تطوعية.</em>{% else %}Leading and giving <em>back.</em>{% endif %}</h2><div class="compact-list">{% for item in volunteering %}<article><div><h3>{{ item.organization }}</h3><p>{{ item|localize:'role' }}</p></div><span>{{ item.start_date|date:'Y' }} — {% if item.is_current %}{% if is_ar %}الآن{% else %}Now{% endif %}{% else %}{{ item.end_date|date:'Y' }}{% endif %}</span></article>{% endfor %}</div></div>{% endif %}
+    {% if home.show_education %}<div><p class="eyebrow">{% if is_ar %}التعليم{% else %}Education{% endif %}</p><h2>{% if is_ar %}معرفة توسّع <em>زاوية النظر.</em>{% else %}Knowledge that widens the <em>view.</em>{% endif %}</h2><div class="compact-list">{% for item in education %}<article><div><h3>{{ item|localize:'title' }}</h3><p>{{ item|localize:'institution' }}</p></div><span>{{ item.year|default:'' }}</span></article>{% endfor %}</div></div>{% endif %}
+  </div>
+</section>
+{% endif %}
+
+{% if home.show_certificates %}<section class="certificates section" id="certificates"><div class="container"><div class="section-heading reveal-heading"><p class="eyebrow">05 — {% if is_ar %}التعلم{% else %}Learning{% endif %}</p><h2>{% if is_ar %}شهادات ومحطات <em>معرفية.</em>{% else %}Certificates & <em>milestones.</em>{% endif %}</h2></div><div class="certificate-grid">{% for item in certificates %}<article class="certificate-card" {% if item.certificate_image %}data-lightbox-src="{{ item.certificate_image.url }}" tabindex="0"{% endif %}><span>{{ item.year }}</span><h3>{{ item|localize:'title' }}</h3><p>{{ item|localize:'organization' }}</p>{% if item.verification_url %}<a href="{{ item.verification_url }}" target="_blank" rel="noopener noreferrer">{% if is_ar %}تحقق{% else %}Verify{% endif %} ↗</a>{% endif %}</article>{% empty %}<div class="empty-state"><p>{% if is_ar %}ستظهر الشهادات المضافة هنا.{% else %}Added certificates will appear here.{% endif %}</p></div>{% endfor %}</div></div></section>{% endif %}
+
+<section class="contact-section section" id="contact"><div class="container contact-grid"><div class="contact-intro"><p class="eyebrow">06 — {% if is_ar %}ابدأ مشروعًا{% else %}Start a project{% endif %}</p><h2>{% if is_ar %}عندك فكرة؟ خلينا نحولها لتصميم <em>يلفت الانتباه.</em>{% else %}Have a project in mind? Let's make it <em>stand out.</em>{% endif %}</h2><div class="contact-direct"><a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a><a href="https://wa.me/{{ site_settings.whatsapp }}" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a></div></div>{% include 'includes/contact_form.html' %}</div></section>
+{% endblock %}

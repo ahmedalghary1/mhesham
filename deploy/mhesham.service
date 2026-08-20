@@ -1,0 +1,14 @@
+[Unit]
+Description=Mohamed Hesham portfolio
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/srv/mhesham
+EnvironmentFile=/srv/mhesham/.env
+ExecStart=/srv/mhesham/.venv/bin/gunicorn config.wsgi:application --bind 127.0.0.1:8000 --workers 3 --access-logfile -
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

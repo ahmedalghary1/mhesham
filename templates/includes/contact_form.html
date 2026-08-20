@@ -1,0 +1,14 @@
+<form class="contact-form" method="post" action="{% url 'contact:send' %}" data-contact-form novalidate>
+  {% csrf_token %}{{ contact_form.website }}
+  <div class="form-grid">
+    <label><span>{% if is_ar %}الاسم{% else %}Name{% endif %}</span>{{ contact_form.name }}</label>
+    <label><span>{% if is_ar %}البريد الإلكتروني{% else %}Email{% endif %}</span>{{ contact_form.email }}</label>
+    <label><span>{% if is_ar %}الهاتف (اختياري){% else %}Phone (optional){% endif %}</span>{{ contact_form.phone }}</label>
+    <label><span>{% if is_ar %}الشركة (اختياري){% else %}Company (optional){% endif %}</span>{{ contact_form.company }}</label>
+    <label><span>{% if is_ar %}نوع المشروع{% else %}Project type{% endif %}</span>{{ contact_form.project_type }}</label>
+    <label><span>{% if is_ar %}الميزانية (اختياري){% else %}Budget (optional){% endif %}</span>{{ contact_form.budget }}</label>
+    <label class="full"><span>{% if is_ar %}احكِ لي عن مشروعك{% else %}Tell me about your project{% endif %}</span>{{ contact_form.message }}</label>
+  </div>
+  <div class="form-response" data-form-response aria-live="polite"></div>
+  <button class="button button--light" type="submit"><span>{% if is_ar %}أرسل الرسالة{% else %}Send message{% endif %}</span><b aria-hidden="true">↗</b></button>
+</form>

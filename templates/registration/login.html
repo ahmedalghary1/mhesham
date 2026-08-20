@@ -1,0 +1,19 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Portfolio dashboard login</title>
+  <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard-responsive.css' %}">
+  <link rel="stylesheet" href="{% static 'css/visual-refresh.css' %}">
+</head>
+<body class="login-body">
+  <main class="login-shell">
+    <section class="login-visual"><div class="login-mark">MH</div><p>Mohamed Hesham</p><h1>Keep the portfolio <em>alive.</em></h1><span>Projects, stories, media, and messages in one calm workspace.</span></section>
+    <section class="login-form"><a href="{% url 'core:home' %}">← Back to website</a><div><p class="dashboard-eyebrow">PRIVATE STUDIO</p><h2>Welcome back</h2><p>Sign in with a staff account to manage the portfolio.</p><form method="post">{% csrf_token %}{{ form.non_field_errors }}<label>Username{{ form.username }}</label><label>Password{{ form.password }}</label>{% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}<button type="submit">Enter dashboard <span>↗</span></button></form></div></section>
+  </main>
+</body>
+</html>
