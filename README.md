@@ -33,7 +33,7 @@ No fake projects were seeded. Add real projects from Dashboard > Projects, save 
 
 ## Production
 
-The production Docker setup runs Gunicorn and PostgreSQL with persistent database and media volumes. It exposes the application only to a shared Docker proxy network by default. Set `DEBUG=False`, a unique `SECRET_KEY`, the domain/origin, database password, and proxy network name in `.env`.
+The production Docker setup runs Gunicorn and PostgreSQL with persistent database and media volumes. It exposes the application only to a shared Docker proxy network by default. It can initially run over HTTP using the server IP; set `DEBUG=False`, a unique `SECRET_KEY`, the server IP, database password, and proxy network name in `.env`.
 
 See [`DEPLOYMENT.md`](DEPLOYMENT.md) for the exact first-deployment, Nginx, HTTPS, update, backup, and troubleshooting commands. Use `deploy/nginx.example.conf` as the reverse-proxy reference.
 
