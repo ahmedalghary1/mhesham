@@ -33,13 +33,9 @@ No fake projects were seeded. Add real projects from Dashboard > Projects, save 
 
 ## Production
 
-1. Set `DEBUG=False`, a long `SECRET_KEY`, the public host/origin, and a PostgreSQL `DATABASE_URL` in `.env`.
-2. Configure SMTP settings and `CONTACT_NOTIFICATION_EMAIL` if email delivery is desired.
-3. Run `python manage.py collectstatic --noinput` and `python manage.py migrate`.
-4. Run Gunicorn behind Nginx with `gunicorn config.wsgi:application --bind 127.0.0.1:8000 --workers 3`.
-5. Serve `/media/` directly from durable storage. The model architecture can later swap Django's default storage for S3 or Cloudinary.
+The production Docker setup runs Gunicorn and PostgreSQL with persistent database and media volumes. It exposes the application only to a shared Docker proxy network by default. Set `DEBUG=False`, a unique `SECRET_KEY`, the domain/origin, database password, and proxy network name in `.env`.
 
-The included Docker files are optional and use PostgreSQL without changing application code. Review `deploy/nginx.conf` and replace the example domain before launch.
+See [`DEPLOYMENT.md`](DEPLOYMENT.md) for the exact first-deployment, Nginx, HTTPS, update, backup, and troubleshooting commands. Use `deploy/nginx.example.conf` as the reverse-proxy reference.
 
 ## Useful commands
 
